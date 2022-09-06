@@ -1,0 +1,23 @@
+spring:
+  profiles:
+    active: local
+
+  # database ??
+  datasource:
+    url: jdbc:mysql://cheetosrds.cciazc8wzseh.us-west-1.rds.amazonaws.com:3306/cheetos
+    username: cheetos
+    password: cheetos121!
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    properties:
+      hibernate:
+        format_sql: true
+        use_sql_comments: true
+
+  # flyway setting
+  flyway:
+    sql-migration-suffixes: .sql
+    locations: classpath:/db/migration
+    baseline-on-migrate: true
+    baseline-version: 0
