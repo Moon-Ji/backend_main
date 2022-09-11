@@ -1,15 +1,11 @@
 package cheetos.main.post.service;
 
-import org.springframework.stereotype.Service;
+import java.util.List;
 
-import cheetos.main.post.repository.PostRepository;
-import lombok.RequiredArgsConstructor;
+import cheetos.main.post.domain.Post;
+import cheetos.main.post.dto.PostDto;
 
-@Service
-@RequiredArgsConstructor
-public class PostService {
+public interface PostService {
 
-    private final PostRepository postRepository;
-
-    public List<Post>
+    PostDto.MainPostDataRes getMainPostInfo(Long userId);
 }
