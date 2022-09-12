@@ -1,11 +1,13 @@
 package cheetos.main.post.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import cheetos.main.common.ResponseForm;
 import cheetos.main.post.domain.Post;
+import cheetos.main.post.dto.PostDto;
 import cheetos.main.post.service.PostServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -26,10 +28,13 @@ public class PostController {
      * @return
      */
     @GetMapping("/main")
-    @ApiOperation(value = "유저별 메인화면 지도 정보", response = Post.class, responseContainer = "List")
+    @ApiOperation(value = "유저별 메인화면 지도 정보", response = PostDto.MainPostDataRes.class, responseContainer = "List")
     public ResponseForm getMainPage() {
         return new ResponseForm(postServiceImpl.getMainPostInfo(TEST_USER_ID));
     }
+
+
+
 
 
 

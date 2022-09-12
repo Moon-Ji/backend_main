@@ -1,4 +1,4 @@
-CREAtE TABLE `users`
+CREATE TABLE `users`
 (
     `id`            BIGINT          NOT NULL AUTO_INCREMENT,
     `nick_name`     VARCHAR(255)    NOT NULL ,

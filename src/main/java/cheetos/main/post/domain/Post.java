@@ -40,7 +40,6 @@ public class Post extends BaseTimeEntity {
     private Long postId;
 
     @JoinColumn(name = "id")
-    @Column(name = "user_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private User userId;
 
