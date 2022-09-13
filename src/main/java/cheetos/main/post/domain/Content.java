@@ -1,5 +1,6 @@
 package cheetos.main.post.domain;
 
+import cheetos.main.post.dto.WritePostDto;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,6 +13,7 @@ import javax.persistence.Table;
 import cheetos.main.common.BaseTimeEntity;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -37,4 +39,18 @@ public class Content extends BaseTimeEntity {
     @JoinColumn(name = "post_id")
     private Post postId;
 
+    @Builder
+    public Content (String img, String description, Post postId) {
+        this.img = img;
+        this.description = description;
+        this.postId = postId;
+    }
+
+    public static Content of (WritePostDto.WritePost writePost) {
+        return Content
+            .builder()
+            .description(w)
+            .build();
+
+    }
 }

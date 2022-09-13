@@ -5,8 +5,9 @@ CREATE TABLE `post`
     `location`         VARCHAR(20)              ,
     `title`            VARCHAR(255)             ,
     `represent_img`    VARCHAR(255)             ,
+    `travelDate`       DATETIME                 ,
     `created_at`       DATETIME                 ,
-    `modified_at`       DATETIME                 ,
+    `modified_at`      DATETIME                 ,
     PRIMARY KEY (`post_id`)
 )   DEFAULT CHARSET = UTF8MB4;
 
@@ -17,6 +18,6 @@ CREATE TABLE `content`
     `img`              VARCHAR(255)             ,
     `description`      VARCHAR(255)             ,
     `created_at`       DATETIME                 ,
-    `modified_at`       DATETIME                 ,
+    `modified_at`      DATETIME                 ,
     PRIMARY KEY (`content_id`)
 )   DEFAULT CHARSET = UTF8MB4;

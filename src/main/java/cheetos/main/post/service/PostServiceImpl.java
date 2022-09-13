@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import cheetos.main.post.dto.PostDto;
+import cheetos.main.post.dto.GetPostDto;
 import cheetos.main.post.repository.ContentRepository;
 import cheetos.main.post.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,10 +22,10 @@ public class PostServiceImpl implements PostService{
      * @return
      */
     @Override
-    public PostDto.MainPostDataRes getMainPostInfo(Long userId) {
-        List<PostDto.LocationInfo> postList = postRepository
-            .findAllByUserId(userId).stream().map(PostDto.LocationInfo::of).toList();
-        return PostDto.MainPostDataRes.of(postList);
+    public GetPostDto.MainPostDataRes getMainPostInfo(Long userId) {
+        List<GetPostDto.LocationInfo> postList = postRepository
+            .findAllByUserId(userId).stream().map(GetPostDto.LocationInfo::of).toList();
+        return GetPostDto.MainPostDataRes.of(postList);
     }
 
 

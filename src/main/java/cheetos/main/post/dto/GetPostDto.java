@@ -6,14 +6,11 @@ import java.util.List;
 import cheetos.main.post.domain.Post;
 import cheetos.main.post.enums.LocalCodes;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
-public class PostDto {
+public class GetPostDto {
 
     @Getter
     @ToString
