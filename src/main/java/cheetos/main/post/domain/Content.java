@@ -1,7 +1,11 @@
 package cheetos.main.post.domain;
 
 import cheetos.main.post.dto.WritePostDto;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import java.time.LocalDateTime;
 import javax.persistence.Column;
+import javax.persistence.Embeddable;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,7 +24,6 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @Table(name = "content")
-@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Content extends BaseTimeEntity {
 
@@ -29,28 +32,45 @@ public class Content extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long contentId;
 
+    @ManyToOne
+    @JoinColumn(name = "post_id")
+    private Post postId;
+
+    @Embedded
     @Column(name = "img")
     private String img;
 
     @Column(name = "description")
     private String description;
 
-    @ManyToOne
-    @JoinColumn(name = "post_id")
-    private Post postId;
+
+    @Column(name = "start_date")
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDateTime startDate;
+
+    @Column(name = "end_date")
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDateTime endDate;
 
     @Builder
-    public Content (String img, String description, Post postId) {
+    public Content (Long contentId, Post postId, String img, String description, LocalDateTime startDate, LocalDateTime endDate) {
+        this.contentId = contentId;
         this.img = img;
         this.description = description;
         this.postId = postId;
+        this.startDate = startDate;
+        this.endDate = endDate;
     }
 
-    public static Content of (WritePostDto.WritePost writePost) {
+    public static Content of (WritePostDto.writeContent content, String convertToImgUrl) {
         return Content
             .builder()
-            .description(w)
+            .img(convertToImgUrl)
+            .description(content.getDescription())
             .build();
-
     }
+
+//    public void setPost(Post post) {
+//        this.postId = post;
+//    }
 }

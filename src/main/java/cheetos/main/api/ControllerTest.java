@@ -1,5 +1,6 @@
 package cheetos.main.api;
 
+import cheetos.main.common.ResponseForm;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,7 +13,12 @@ import lombok.RequiredArgsConstructor;
 public class ControllerTest {
 
     @GetMapping("/1")
-    public String test() {
+    public String test1() {
         return "test controller";
+    }
+
+    @GetMapping("/2")
+    public ResponseForm test2() {
+        return new ResponseForm();
     }
 }

@@ -25,3 +25,7 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
+
+# spring security disabled;
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration

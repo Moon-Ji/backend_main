@@ -6,6 +6,7 @@ import java.util.List;
 import cheetos.main.post.domain.Post;
 import cheetos.main.post.enums.LocalCodes;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
@@ -16,12 +17,11 @@ public class GetPostDto {
     @ToString
     public static class MainPostDataRes {
 
-        private List<LocationInfo> map = new ArrayList<>();
+        private List<LocationInfo> map;
 
         public MainPostDataRes(List<LocationInfo> list) {
             this.map = list;
         }
-
         public static MainPostDataRes of (List<LocationInfo> list) {
             return new MainPostDataRes(list);
         }
