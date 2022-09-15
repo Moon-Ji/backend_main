@@ -5,6 +5,7 @@ import cheetos.main.post.service.PostService;
 import cheetos.main.post.service.PostWriteService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,7 +47,7 @@ public class PostController {
     @PostMapping("/write")
     @ApiOperation(value = "포스트 작성 컨트롤러")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseForm createPost(@RequestBody WritePost writePost) {
+    public ResponseForm createPost(@ModelAttribute WritePost writePost) {
         postWriteService.writePost(writePost);
         return new ResponseForm();
     }
