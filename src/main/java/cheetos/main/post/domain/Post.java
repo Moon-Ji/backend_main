@@ -1,7 +1,10 @@
 package cheetos.main.post.domain;
 
-import cheetos.main.post.dto.WritePostDto.WritePost;
+import cheetos.main.post.dto.request.WritePostDto;
+import cheetos.main.post.dto.request.WritePostDto.WritePost;
+import cheetos.main.post.dto.request.WritePostDto.writeContent;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -16,7 +19,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -24,18 +26,15 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import cheetos.main.common.BaseTimeEntity;
 import cheetos.main.post.enums.LocalCodes;
 import cheetos.main.user.User;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
 @Getter
 @Table(name = "post")
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 public class Post extends BaseTimeEntity {
 
     @Id
@@ -43,12 +42,12 @@ public class Post extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long postId;
 
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "user_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private User userId;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "postId")
-    private List<Content> contents ;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "postId", orphanRemoval = true)
+    private List<Content> contents = new ArrayList<>();
 
     @Column(name = "location")
     @Enumerated(EnumType.STRING)
@@ -81,23 +80,26 @@ public class Post extends BaseTimeEntity {
         this.endDate = endDate;
     }
 
-    public static Post of (WritePost writePost, List<Content> contents, String convertedImgUrl) {
+    public static Post of (WritePost writePost, String convertedImgUrl, User user) {
         return Post
             .builder()
+            .userId(user)
             .location(writePost.getLocation())
             .title(writePost.getTitle())
-            .contents(contents)
             .representImg(convertedImgUrl)
             .startDate(writePost.getStartDate())
             .endDate(writePost.getEndDate())
             .build();
     }
 
+    /**
+     * contents 연관관계 맵핑
+     */
+    public void setContents(List<Content> contents) {
+        this.contents = contents;
+    }
 
-
-//    public void setContents(List<Content> contents) {
-//        for (Content content : contents) {
-//            content.setPost(this);
-//        }
-//    }
+    public void setUser(User user) {
+        this.userId = user;
+    }
 }

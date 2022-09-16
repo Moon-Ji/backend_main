@@ -1,12 +1,10 @@
 package cheetos.main.post.domain;
 
-import cheetos.main.post.dto.WritePostDto;
+import cheetos.main.post.dto.request.WritePostDto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDateTime;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.Embeddable;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,7 +15,6 @@ import javax.persistence.Table;
 
 import cheetos.main.common.BaseTimeEntity;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,17 +30,15 @@ public class Content extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long contentId;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "post_id")
     private Post postId;
 
-    @Embedded
     @Column(name = "img")
     private String img;
 
     @Column(name = "description")
     private String description;
-
 
     @Column(name = "start_date")
     @JsonFormat(pattern = "yyyy-MM-dd")
@@ -71,7 +66,8 @@ public class Content extends BaseTimeEntity {
             .build();
     }
 
-//    public void setPost(Post post) {
-//        this.postId = post;
-//    }
+    public void setPostId (Post post) {
+        this.postId = post;
+        post.getContents().add(this);
+    }
 }

@@ -3,17 +3,21 @@ package cheetos.main.post.service;
 import cheetos.main.Exception.S3ConvertImgException;
 import cheetos.main.post.domain.Content;
 import cheetos.main.post.domain.Post;
-import cheetos.main.post.dto.WritePostDto;
-import cheetos.main.post.dto.WritePostDto.WritePost;
-import cheetos.main.post.dto.WritePostDto.writeContent;
+import cheetos.main.post.dto.request.WritePostDto;
+import cheetos.main.post.dto.request.WritePostDto.WritePost;
+import cheetos.main.post.dto.request.WritePostDto.writeContent;
 import cheetos.main.post.repository.ContentRepository;
+import cheetos.main.user.User;
+import cheetos.main.user.repository.UserRepository;
+import java.util.ArrayList;
 import java.util.List;
 
+import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import cheetos.main.post.dto.GetPostDto;
+import cheetos.main.post.dto.request.GetPostDto;
 import cheetos.main.post.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,7 +30,7 @@ public class PostWriteServiceImpl implements PostWriteService {
 
     private final ImgService imgService;
     private final PostRepository postRepository;
-
+    private final UserRepository userRepository;
     private final ContentRepository contentRepository;
 
     /**
@@ -46,12 +50,26 @@ public class PostWriteServiceImpl implements PostWriteService {
      * TODO : AWS S3 이미지 업로드 연동 구현 필요
      */
     @Transactional
-    public void writePost (WritePostDto.WritePost writePost) {
+    public void writePost (WritePostDto.WritePost writePost, User user1) {
 
-        //컨텐츠를 저장
-        List<Content> contents = saveContents(writePost.getContents());
+        User user = userRepository.findById(3L).orElse(null);
+
         // 포스트를 저장
-        savePost(writePost, contents);
+        //savePost(writePost, user);
+
+        List<Content> lists = writePost.getContents().stream().map(it -> Content.of(it, "cdn"))
+            .toList();
+
+
+        Post post = new Post();
+        for (Content content : lists) {
+            content.setPostId(post);
+            //post.getContents().add(content);
+        }
+
+        post.setUser(user);
+        postRepository.save(post);
+
 
         log.info("[POST] 포스트 저장 완료");
     }
@@ -60,13 +78,20 @@ public class PostWriteServiceImpl implements PostWriteService {
      * 포스트 저장
      */
     @Transactional
-    public void savePost (WritePost writePost, List<Content> contents) {
+    public void savePost (WritePost writePost, User user) {
 
         // 대표이미지 url 로 변환
-        String representImg = convertImgToUrl(writePost.getRepresentImg());
+        String representPostImg = convertImgToUrl(writePost.getRepresentImg());
+
+        Post post = new Post();
 
         // 포스트 저장
-        Post.of(writePost,contents,representImg);
+        postRepository.save(Post.of(writePost, representPostImg, user));
+
+        //컨텐츠를 저장
+        List<Content> contents = saveContents(writePost.getContents(), post);
+
+        post.setContents(contents);
     }
 
 
@@ -75,19 +100,25 @@ public class PostWriteServiceImpl implements PostWriteService {
      * @param writeContentList
      */
     @Transactional
-    public List<Content> saveContents (List<writeContent> writeContentList) {
+    public List<Content> saveContents (List<writeContent> writeContentList, Post post) {
 
+//        Post post = new Post();
+//
+//        post.addContents(writeContentList);
+
+        List<Content> list = new ArrayList<>();
         // 컨텐츠로 변환
-        List<Content> contents = writeContentList.stream().map(it ->
-            {
-                // 이미지를 url로 변환
-                String convertedImgUrl = convertImgToUrl(it.getImg());
-                return Content.of(it, convertedImgUrl);
-            }).collect(Collectors.toList());
+//        List<Content> contents = writeContentList.stream().map(it ->
+//            {
+//                // 이미지를 url로 변환
+//                String convertedImgUrl = convertImgToUrl(it.getImg());
+//                return Content.of(it, convertedImgUrl, post);
+//            }).collect(Collectors.toList());
+//
+//        // 컨텐츠 저장
+//        contentRepository.saveAll(contents);
 
-        // 컨텐츠 저장
-        contentRepository.saveAll(contents);
-        return contents;
+        return list;
     }
 
     /**

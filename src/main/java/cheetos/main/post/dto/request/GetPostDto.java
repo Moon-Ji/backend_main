@@ -1,4 +1,4 @@
-package cheetos.main.post.dto;
+package cheetos.main.post.dto.request;
 
 import java.util.ArrayList;
 import java.util.List;

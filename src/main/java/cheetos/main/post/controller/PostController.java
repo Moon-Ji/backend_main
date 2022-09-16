@@ -1,19 +1,21 @@
 package cheetos.main.post.controller;
 
-import cheetos.main.post.dto.WritePostDto.WritePost;
-import cheetos.main.post.service.PostService;
+import cheetos.main.post.dto.request.WritePostDto.WritePost;
+import cheetos.main.post.enums.Gender;
 import cheetos.main.post.service.PostWriteService;
+import cheetos.main.user.User;
+import cheetos.main.user.domain.Email;
+import cheetos.main.user.domain.NickName;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import cheetos.main.common.ResponseForm;
-import cheetos.main.post.dto.GetPostDto;
+import cheetos.main.post.dto.request.GetPostDto;
 import cheetos.main.post.service.PostWriteServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -48,7 +50,18 @@ public class PostController {
     @ApiOperation(value = "포스트 작성 컨트롤러")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseForm createPost(@ModelAttribute WritePost writePost) {
-        postWriteService.writePost(writePost);
+        /**
+         * 삭제 필요
+         */
+        User user = User
+            .builder()
+            .nickName(new NickName("쿠쿠"))
+            .email(new Email("runnz121@gmail.com"))
+            .name("쿠쿠")
+            .gender(Gender.MAN)
+            .profileImg("cdn/url")
+            .build();;
+        postWriteService.writePost(writePost, user);
         return new ResponseForm();
     }
 

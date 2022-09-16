@@ -18,6 +18,8 @@ import cheetos.main.user.domain.NickName;
 import cheetos.main.user.domain.Provider;
 import cheetos.main.user.domain.Role;
 import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Builder.Default;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -35,7 +37,7 @@ public class User extends BaseTimeEntity {
     @Embedded
     private NickName nickName;
 
-    @Column(name = "email")
+    @Embedded
     private Email email;
 
     @Column(name = "name")
@@ -57,4 +59,20 @@ public class User extends BaseTimeEntity {
 
     @Column(name = "auth_provider")
     private Provider authProvider;
+
+
+    @Builder
+    public User(Long id, NickName nickName, Email email, String name, Gender gender, String profileImg,
+    Role userRole, String birthDay, Provider authProvider) {
+        this.id = id;
+        this.nickName = nickName;
+        this.email = email;
+        this.name = name;
+        this.gender = gender;
+        this.profileImg = profileImg;
+        this.userRole = userRole;
+        this.birthDay = birthDay;
+        this.authProvider = authProvider;
+    }
+
 }
