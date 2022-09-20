@@ -1,29 +1,19 @@
 package cheetos.main.user;
 
-import javax.persistence.Column;
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import cheetos.main.common.BaseTimeEntity;
 import cheetos.main.user.domain.Email;
 import cheetos.main.user.domain.NickName;
-import cheetos.main.user.domain.PhoneNumber;
 import cheetos.main.user.domain.Provider;
 import cheetos.main.user.domain.Role;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 @Entity
 @Getter
 @Table(name = "users")
 @RequiredArgsConstructor
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+//@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User extends BaseTimeEntity {
 
     @Id
@@ -34,21 +24,32 @@ public class User extends BaseTimeEntity {
     @Embedded
     private NickName nickName;
 
-    @Column(name = "email")
+    @Embedded
     private Email email;
 
     @Column(name = "name")
     private String name;
 
-    @Column(name = "phone_number")
-    private PhoneNumber phoneNumber;
+    private String gender;
 
     @Column(name = "profile_img")
     private String profileImg;
 
+    @Enumerated(EnumType.STRING)
+    @Setter
     @Column(name = "user_roles")
     private Role userRole;
 
-    @Column(name = "auth_provider")
+    private String birthDay;
+
+    @Embedded
     private Provider authProvider;
+
+    @Builder(builderClassName="OAuth2Register", builderMethodName = "oauth2Register")
+    public User(String nickName, String email, Role role, String authProvider) {
+        this.nickName = new NickName(nickName);
+        this.email = new Email(email);
+        this.userRole = role;
+        this.authProvider = new Provider(authProvider);
+    }
 }

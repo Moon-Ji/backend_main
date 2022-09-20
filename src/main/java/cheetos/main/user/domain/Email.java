@@ -1,5 +1,6 @@
 package cheetos.main.user.domain;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 import lombok.AccessLevel;
@@ -12,4 +13,11 @@ import lombok.ToString;
 @Embeddable
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Email {
+
+    @Column(name = "email")
+    private String email;
+
+    public Email(String email) {
+        this.email = email;
+    }
 }
