@@ -12,12 +12,10 @@ import cheetos.main.user.repository.UserRepository;
 import java.util.ArrayList;
 import java.util.List;
 
-import java.util.Optional;
-import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import cheetos.main.post.dto.request.GetPostDto;
+import cheetos.main.post.dto.response.GetPostDto;
 import cheetos.main.post.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,17 +31,7 @@ public class PostWriteServiceImpl implements PostWriteService {
     private final UserRepository userRepository;
     private final ContentRepository contentRepository;
 
-    /**
-     * 유저가 로딩할 게시글 메인정보 리스트 반환
-     * TODO : 로그인 상태에 따라 갖고오는 유저 정보를 바탕으로 바꾸기
-     * @return
-     */
-    @Transactional(readOnly = true)
-    public GetPostDto.MainPostDataRes getMainPostInfo(Long userId) {
-        List<GetPostDto.LocationInfo> postList = postRepository
-            .findAllByUserId(userId).stream().map(GetPostDto.LocationInfo::of).toList();
-        return GetPostDto.MainPostDataRes.of(postList);
-    }
+
 
     /**
      * 포스트 작성 로직
