@@ -1,8 +1,11 @@
 package cheetos.main.post.domain;
 
 import cheetos.main.post.dto.request.WritePostDto;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.time.LocalDateTime;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -49,7 +52,8 @@ public class Content extends BaseTimeEntity {
     private LocalDateTime endDate;
 
     @Builder
-    public Content (Long contentId, Post postId, String img, String description, LocalDateTime startDate, LocalDateTime endDate) {
+    public Content(Long contentId, Post postId, String img, String description, LocalDateTime startDate,
+        LocalDateTime endDate) {
         this.contentId = contentId;
         this.img = img;
         this.description = description;
@@ -58,7 +62,7 @@ public class Content extends BaseTimeEntity {
         this.endDate = endDate;
     }
 
-    public static Content of (WritePostDto.writeContent content, String convertToImgUrl) {
+    public static Content of(WritePostDto.writeContent content, String convertToImgUrl) {
         return Content
             .builder()
             .img(convertToImgUrl)
@@ -66,7 +70,7 @@ public class Content extends BaseTimeEntity {
             .build();
     }
 
-    public void setPostId (Post post) {
+    public void setPostId(Post post) {
         this.postId = post;
         post.getContents().add(this);
     }

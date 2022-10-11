@@ -1,5 +1,6 @@
 package cheetos.main.post.controller;
 
+import cheetos.main.post.domain.Post;
 import cheetos.main.post.dto.request.WritePostDto.WritePost;
 import cheetos.main.post.enums.Gender;
 import cheetos.main.post.enums.LocalCodes;
@@ -89,7 +90,7 @@ public class PostController {
     @GetMapping("/detail")
     @ApiOperation(value = "상세포스트 반환")
     public ResponseForm getPostDetail(@RequestParam Long postId) {
-        return new ResponseForm(postReadService.getPostDetail(postId));
+        return new ResponseForm(postReadService.getPostDetail(Post.from(postId)));
     }
 
 }

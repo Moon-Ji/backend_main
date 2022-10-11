@@ -3,6 +3,7 @@ package cheetos.main.post.domain;
 import cheetos.main.post.dto.request.WritePostDto;
 import cheetos.main.post.dto.request.WritePostDto.WritePost;
 import cheetos.main.post.dto.request.WritePostDto.writeContent;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -68,8 +69,8 @@ public class Post extends BaseTimeEntity {
     private LocalDateTime endDate;
 
     @Builder
-    public Post (Long postId, User userId, List<Content> contents, LocalCodes location, String title
-    ,String representImg, LocalDateTime startDate, LocalDateTime endDate) {
+    public Post(Long postId, User userId, List<Content> contents, LocalCodes location, String title
+        , String representImg, LocalDateTime startDate, LocalDateTime endDate) {
         this.postId = postId;
         this.userId = userId;
         this.contents = contents;
@@ -80,7 +81,7 @@ public class Post extends BaseTimeEntity {
         this.endDate = endDate;
     }
 
-    public static Post of (WritePost writePost, String convertedImgUrl, User user) {
+    public static Post of(WritePost writePost, String convertedImgUrl, User user) {
         return Post
             .builder()
             .userId(user)
@@ -90,6 +91,10 @@ public class Post extends BaseTimeEntity {
             .startDate(writePost.getStartDate())
             .endDate(writePost.getEndDate())
             .build();
+    }
+
+    public static Post from(Long postId) {
+        return Post.builder().postId(postId).build();
     }
 
     /**

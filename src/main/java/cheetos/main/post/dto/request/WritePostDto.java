@@ -2,19 +2,25 @@ package cheetos.main.post.dto.request;
 
 import cheetos.main.post.domain.Content;
 import cheetos.main.post.enums.LocalCodes;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
+
 import io.swagger.annotations.ApiModelProperty;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+
 import jdk.jfr.Timespan;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -26,7 +32,6 @@ public class WritePostDto {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class WritePost {
-
 
         @Enumerated(EnumType.STRING)
         @ApiModelProperty(value = "지역")

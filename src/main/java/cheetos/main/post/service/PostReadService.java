@@ -1,5 +1,6 @@
 package cheetos.main.post.service;
 
+import cheetos.main.post.domain.Post;
 import cheetos.main.post.dto.response.GetPostDto;
 import cheetos.main.post.enums.LocalCodes;
 
@@ -12,6 +13,6 @@ public interface PostReadService extends PostService{
     GetPostDto.LocalPostDataRes getLocalPostData(LocalCodes localCodes);
 
     // 상세 포스트 반환하기
-    GetPostDto.PostDetailRes getPostDetail(Long postId);
+    GetPostDto.PostDetailRes getPostDetail(Post post);
 
 }

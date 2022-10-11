@@ -3,6 +3,7 @@ package cheetos.main.post.dto.response;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import cheetos.main.post.domain.Content;
 import cheetos.main.post.domain.Post;
 import cheetos.main.post.enums.LocalCodes;
 import io.swagger.annotations.Api;
@@ -79,7 +80,7 @@ public class GetPostDto {
             this.post = post;
         }
 
-        public LocalPostDataRes of(LocalCodes localCodes, List<LocalPost> post) {
+        public static LocalPostDataRes of(LocalCodes localCodes, List<LocalPost> post) {
             return LocalPostDataRes
                 .builder()
                 .locationName(localCodes.getName())
@@ -162,6 +163,17 @@ public class GetPostDto {
             this.createDate = createDate;
             this.contents = contents;
         }
+
+        public static PostDetailRes of(Post post, List<ContentsDetailRes> contents) {
+            return PostDetailRes
+                .builder()
+                .title(post.getTitle())
+                .startDate(post.getStartDate())
+                .endDate(post.getEndDate())
+                .createDate(post.getCreatedAt())
+                .contents(contents)
+                .build();
+        }
     }
 
     /**
@@ -183,11 +195,11 @@ public class GetPostDto {
             this.description = description;
         }
 
-        public ContentsDetailRes of(String img, String description) {
+        public static ContentsDetailRes of(Content content) {
             return ContentsDetailRes
                 .builder()
-                .img(img)
-                .description(description)
+                .img(content.getImg())
+                .description(content.getDescription())
                 .build();
         }
     }
