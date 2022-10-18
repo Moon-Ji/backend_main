@@ -11,6 +11,9 @@ plugins {
 
 	//querydsl 추가
 	id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
+
+	//swagger open api ui
+	//id("org.springdoc.openapi-gradle-plugin") version "1.4.0"
 }
 
 group = 'cheetos'
@@ -53,6 +56,11 @@ dependencies {
 	// swagger 추가
 	implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
 	implementation group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
+
+	// aws s3 업로드를 위한 의존성 추가
+	implementation "org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE"
+
+
 }
 
 

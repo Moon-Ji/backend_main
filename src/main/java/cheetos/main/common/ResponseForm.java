@@ -1,5 +1,6 @@
 package cheetos.main.common;
 
+import cheetos.main.common.domain.CommonCode.Code;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,11 +26,20 @@ public class ResponseForm<T> {
         this.data = data;
     }
 
+
+    /**
+     * 성공시 에러코드와 에러 메시지 반환
+     */
+    public ResponseForm () {
+        meta.put(CommonCode.keys.CODE.getKey(), Code.SUCCESS.getCode());
+        meta.put(CommonCode.keys.MESSAGE.getKey(), CommonCode.Code.SUCCESS.getMessage());
+    }
+
     /**
      * 에러 발생시 에러코드와 에러 메시지 반환
      */
-    public ResponseForm () {
-        meta.put(CommonCode.keys.CODE.getKey(), CommonCode.Code.FAIL.getCode());
-        meta.put(CommonCode.keys.MESSAGE.getKey(), CommonCode.Code.FAIL.getMessage());
-    }
+//    public void ResponseFormFailed () {
+//        meta.put(CommonCode.keys.CODE.getKey(), CommonCode.Code.FAIL.getCode());
+//        meta.put(CommonCode.keys.MESSAGE.getKey(), CommonCode.Code.FAIL.getMessage());
+//    }
 }

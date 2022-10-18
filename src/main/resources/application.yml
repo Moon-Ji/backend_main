@@ -4,7 +4,7 @@ spring:
 
   # database ??
   datasource:
-    url: jdbc:mysql://cheetosrds.cciazc8wzseh.us-west-1.rds.amazonaws.com:3306/cheetos
+    url: jdbc:mysql://cheetos.cgapkjvdygcg.ap-northeast-2.rds.amazonaws.com:3306/cheetos
     username: cheetos
     password: cheetos121!
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -14,6 +14,7 @@ spring:
       hibernate:
         format_sql: true
         use_sql_comments: true
+        show_sql: true
 
   # flyway setting
   flyway:
@@ -21,3 +22,32 @@ spring:
     locations: classpath:/db/migration
     baseline-on-migrate: true
     baseline-version: 0
+
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+# spring security disabled;
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
+
+# aws accessKey, secretKey
+cloud:
+  aws:
+    stack:
+      auto: false
+    region:
+      static: ap-northeast-2
+    credentials:
+      access-key: AKIAZ3WF4C7C7BHZNGTX
+      secret-key: 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
+
+# aws metadatautils 에러 로깅 레벨 설정
+logging:
+  level:
+    com:
+      amazonaws:
+        util:
+          EC2MetadataUtils: error
+
+---
