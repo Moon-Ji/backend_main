@@ -1,56 +1,27 @@
 package cheetos.main.user.controller;
 
-import cheetos.main.user.User;
-import cheetos.main.user.domain.Role;
-import cheetos.main.user.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Controller;
+import cheetos.main.common.ResponseForm;
+import cheetos.main.user.domain.User;
+import cheetos.main.user.service.UserService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
+@RequestMapping("/api/v1/users")
+@RequiredArgsConstructor
 public class UserController {
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    @GetMapping("/")
-    @ResponseBody
-    public String main() {
-        return "main";
-    }
+    private final UserService userService;
 
-    @GetMapping("/loginForm")
-    public String loginForm() {
-        return "login";
-    }
+    @GetMapping
+    public ResponseForm getUser() {
+        org.springframework.security.core.userdetails.User principal = (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-    @GetMapping("/joinForm")
-    public String joinForm() {
-        return "join";
-    }
+        User user = userService.getUser(principal.getUsername());
 
-    @PostMapping("/join")
-    public String join(@ModelAttribute User user) {
-//        user.setUserRole(Role.USER);
-
-        userRepository.save(user);
-        return "redirect:/loginForm";
-    }
-
-    @GetMapping("/map")
-    @ResponseBody
-    public String map() {
-        return "map";
-    }
-
-    @GetMapping("/admin")
-    @ResponseBody
-    public String admin() {
-        return "admin";
+        return new ResponseForm(user);
     }
 }

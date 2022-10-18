@@ -1,6 +1,6 @@
 package cheetos.main.user.repository;
 
-import cheetos.main.user.User;
+import cheetos.main.user.domain.User;
 import cheetos.main.user.domain.Email;
 import cheetos.main.user.domain.NickName;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -9,5 +9,7 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public enum Role {
-    USER, MANAGER, ADMIN
+    USER,
+    MANAGER,
+    ADMIN
 }

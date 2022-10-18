@@ -1,13 +1,13 @@
-package cheetos.main.auth.userInfo;
+package cheetos.main.auth.userInfo.impl;
+
+import cheetos.main.auth.userInfo.OAuth2UserInfo;
 
 import java.util.Map;
 
-public class GoogleUserInfo implements OAuth2UserInfo{
-
-    private Map<String, Object> attributes;
+public class GoogleUserInfo extends OAuth2UserInfo {
 
     public GoogleUserInfo(Map<String, Object> attributes) {
-        this.attributes = attributes;
+        super(attributes);
     }
 
     @Override
@@ -16,7 +16,7 @@ public class GoogleUserInfo implements OAuth2UserInfo{
     }
 
     @Override
-    public String getProviderId() {
+    public String getId() {
         return attributes.get("sub").toString();
     }
 
@@ -30,8 +30,4 @@ public class GoogleUserInfo implements OAuth2UserInfo{
         return (String) attributes.get("email");
     }
 
-    @Override
-    public String getProvider() {
-        return "google";
-    }
 }

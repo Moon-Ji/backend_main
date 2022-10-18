@@ -1,4 +1,4 @@
-package cheetos.main.user;
+package cheetos.main.user.domain;
 
 import javax.persistence.*;
 
@@ -11,9 +11,11 @@ import lombok.*;
 
 @Entity
 @Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "users")
-@RequiredArgsConstructor
-//@NoArgsConstructor(access = AccessLevel.PROTECTED)
+//@RequiredArgsConstructor
 public class User extends BaseTimeEntity {
 
     @Id
@@ -42,14 +44,16 @@ public class User extends BaseTimeEntity {
 
     private String birthDay;
 
-    @Embedded
+    @Enumerated(EnumType.STRING)
+    @Setter
+    @Column(name = "auth_provider")
     private Provider authProvider;
 
     @Builder(builderClassName="OAuth2Register", builderMethodName = "oauth2Register")
-    public User(String nickName, String email, Role role, String authProvider) {
+    public User(String nickName, String email, Role role, Provider authProvider) {
         this.nickName = new NickName(nickName);
         this.email = new Email(email);
         this.userRole = role;
-        this.authProvider = new Provider(authProvider);
+        this.authProvider = authProvider;
     }
 }

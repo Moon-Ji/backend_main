@@ -10,14 +10,11 @@ import lombok.ToString;
 
 @Getter
 @ToString
-@Embeddable
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Provider {
+public enum Provider {
+    GOOGLE,
+    FACEBOOK,
+    NAVER,
+    KAKAO;
 
-    @Column(name = "auth_provider")
-    private String provider;
-
-    public Provider(String provider) {
-        this.provider = provider;
-    }
 }

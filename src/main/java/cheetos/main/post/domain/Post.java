@@ -1,7 +1,6 @@
 package cheetos.main.post.domain;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,15 +12,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import cheetos.main.common.BaseTimeEntity;
 import cheetos.main.post.enums.LocalCodes;
-import cheetos.main.user.User;
-import io.swagger.annotations.ApiModelProperty;
+import cheetos.main.user.domain.User;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
