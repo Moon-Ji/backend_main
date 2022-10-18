@@ -16,6 +16,7 @@ spring:
       hibernate:
         format_sql: true
         use_sql_comments: true
+        show_sql: true
 
   # Security OAuth
   security:
@@ -79,6 +80,7 @@ spring:
     pathmatch:
       matching-strategy: ant_path_matcher
 
+
 # cors 설정
 cors:
   allowed-origins: 'http://localhost:3000'
@@ -98,3 +100,29 @@ app:
   oauth2:
     authorizedRedirectUris:
       - http://localhost:3000/oauth/redirect
+
+# spring security disabled;
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
+
+# aws accessKey, secretKey
+cloud:
+  aws:
+    stack:
+      auto: false
+    region:
+      static: ap-northeast-2
+    credentials:
+      access-key: AKIAZ3WF4C7C7BHZNGTX
+      secret-key: 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
+
+# aws metadatautils 에러 로깅 레벨 설정
+logging:
+  level:
+    com:
+      amazonaws:
+        util:
+          EC2MetadataUtils: error
+
+---
+
