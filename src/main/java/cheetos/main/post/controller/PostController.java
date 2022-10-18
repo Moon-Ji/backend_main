@@ -1,16 +1,5 @@
 package cheetos.main.post.controller;
 
-import cheetos.main.post.domain.Post;
-import cheetos.main.post.dto.request.WritePostDto.WritePost;
-import cheetos.main.post.enums.Gender;
-import cheetos.main.post.enums.LocalCodes;
-import cheetos.main.post.repository.PostRepository;
-import cheetos.main.post.service.PostReadService;
-import cheetos.main.post.service.PostWriteService;
-import cheetos.main.user.User;
-import cheetos.main.user.domain.Email;
-import cheetos.main.user.domain.NickName;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -22,8 +11,17 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import cheetos.main.common.ResponseForm;
+import cheetos.main.post.domain.Post;
+import cheetos.main.post.dto.request.WritePostDto.WritePost;
 import cheetos.main.post.dto.response.GetPostDto;
+import cheetos.main.post.enums.Gender;
+import cheetos.main.post.enums.LocalCodes;
+import cheetos.main.post.service.PostReadService;
+import cheetos.main.post.service.PostWriteService;
 import cheetos.main.post.service.PostWriteServiceImpl;
+import cheetos.main.user.domain.Email;
+import cheetos.main.user.domain.NickName;
+import cheetos.main.user.domain.User;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;

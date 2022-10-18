@@ -11,5 +11,4 @@ public class S3ConvertImgException extends RuntimeException {
     public S3ConvertImgException(ErrorCode errorCode) {
         super(errorCode.getMessage());
     }
-
 }

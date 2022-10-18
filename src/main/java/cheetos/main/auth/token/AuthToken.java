@@ -1,5 +1,7 @@
 package cheetos.main.auth.token;
 
+import cheetos.main.Exception.JWTExpirationException;
+import cheetos.main.post.enums.ErrorCode;
 import io.jsonwebtoken.*;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -65,6 +67,7 @@ public class AuthToken {
             log.info("Invalid JWT token.");
         } catch (ExpiredJwtException e) {
             log.info("Expired JWT token");
+            throw new JWTExpirationException(ErrorCode.JWT_EXPIRATION_ERROR);
         } catch (UnsupportedJwtException e) {
             log.info("Unsupported JWT token.");
         } catch (IllegalStateException e) {

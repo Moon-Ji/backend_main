@@ -2,29 +2,23 @@ package cheetos.main.post.service;
 
 import static cheetos.main.post.enums.ErrorCode.*;
 
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+
+import cheetos.main.Exception.JWTExpirationException;
 import cheetos.main.Exception.S3ConvertImgException;
 import cheetos.main.post.domain.Content;
 import cheetos.main.post.domain.Post;
 import cheetos.main.post.dto.request.WritePostDto;
-import cheetos.main.post.dto.request.WritePostDto.WritePost;
-import cheetos.main.post.dto.request.WritePostDto.writeContent;
 import cheetos.main.post.repository.ContentRepository;
-import cheetos.main.user.User;
-import cheetos.main.user.repository.UserRepository;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import lombok.extern.slf4j.Slf4j;
-
-import org.springframework.stereotype.Service;
-
-import cheetos.main.post.dto.response.GetPostDto;
 import cheetos.main.post.repository.PostRepository;
+import cheetos.main.user.domain.User;
+import cheetos.main.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service

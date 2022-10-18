@@ -10,7 +10,8 @@ public class CommonCode {
     public enum keys {
         CODE("code"),
         STATUS("status"),
-        MESSAGE("message")
+        MESSAGE("message"),
+        TEST("test")
         ;
 
         @Getter
