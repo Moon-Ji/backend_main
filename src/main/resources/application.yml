@@ -2,9 +2,11 @@ spring:
   profiles:
     active: local
 
+
+
   # database ??
   datasource:
-    url: jdbc:mysql://cheetosrds.cciazc8wzseh.us-west-1.rds.amazonaws.com:3306/cheetos
+    url: jdbc:mysql://cheetos.cgapkjvdygcg.ap-northeast-2.rds.amazonaws.com:3306/cheetos
     username: cheetos
     password: cheetos121!
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -14,6 +16,58 @@ spring:
       hibernate:
         format_sql: true
         use_sql_comments: true
+        show_sql: true
+
+  # Security OAuth
+  security:
+    oauth2.client:
+      registration:
+        google:
+          clientId: 8120613294-7gg19p3bqhf1u56i503gkb1vam3oglcb.apps.googleusercontent.com
+          clientSecret: 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
+          scope:
+            - email
+            - profile
+        facebook:
+          clientId: 572254158021087
+          clientSecret: 3ef7dd2095255908bdcbd36dff513a77
+          scope:
+            - email
+            - public_profile
+        naver:
+          clientId: 28AvASCJgx3b8EpLhP62
+          clientSecret: cYNK_Gru4f
+          clientAuthenticationMethod: post
+          scope:
+            - name
+            - email
+          clientName: Naver
+          authorizationGrantType: authorization_code
+          redirectUri: "{baseUrl}/{action}/oauth2/code/{registrationId}"
+
+        kakao:
+          clientId: 'ex'
+          clientSecret: ctPRTGqdXhSB5XDfLW3vLDBjcdKo2rwP
+          scope:
+            - profile_nickname
+            - profile_image
+            - account_email
+          clientName: Kakao
+          authorizationGrantType: authorization_code
+          redirectUri: http://localhost:8080/login/oauth2/code/kakao
+          clientAuthenticationMethod: post
+      # Provider 설정
+      provider:
+        naver:
+          authorizationUri: https://nid.naver.com/oauth2.0/authorize
+          tokenUri: https://nid.naver.com/oauth2.0/token
+          userInfoUri: https://openapi.naver.com/v1/nid/me
+          userNameAttribute: response # 회원정보를 json으로 받는데 네이버는 response라는 키 값으로 리턴
+        kakao:
+          authorizationUri: https://kauth.kakao.com/oauth/authorize
+          tokenUri: https://kauth.kakao.com/oauth/token
+          userInfoUri: https://kapi.kakao.com/v2/user/me
+          userNameAttribute: id
 
   # flyway setting
   flyway:
@@ -21,3 +75,54 @@ spring:
     locations: classpath:/db/migration
     baseline-on-migrate: true
     baseline-version: 0
+
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+
+# cors 설정
+cors:
+  allowed-origins: 'http://localhost:3000'
+  allowed-methods: GET,POST,PUT,DELETE,OPTIONS
+  allowed-headers: '*'
+  max-age: 3600
+
+# jwt secret key 설정
+jwt.secret: '8sknjlO3NPTBqo319DHLNqsQAfRJEdKsETOds'
+
+# 토큰 관련 secret Key 및 RedirectUri 설정
+app:
+  auth:
+    tokenSecret: 926D96C90030DD58429D2751AC1BDBBC
+    tokenExpiry: 1800000
+    refreshTokenExpiry: 604800000
+  oauth2:
+    authorizedRedirectUris:
+      - http://localhost:3000/oauth/redirect
+
+# spring security disabled;
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
+
+# aws accessKey, secretKey
+cloud:
+  aws:
+    stack:
+      auto: false
+    region:
+      static: ap-northeast-2
+    credentials:
+      access-key: AKIAZ3WF4C7C7BHZNGTX
+      secret-key: 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
+
+# aws metadatautils 에러 로깅 레벨 설정
+logging:
+  level:
+    com:
+      amazonaws:
+        util:
+          EC2MetadataUtils: error
+
+---
+

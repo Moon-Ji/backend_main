@@ -1,5 +1,6 @@
 package cheetos.main.user.domain;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 import lombok.AccessLevel;
@@ -9,7 +10,11 @@ import lombok.ToString;
 
 @Getter
 @ToString
-@Embeddable
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Provider {
+public enum Provider {
+    GOOGLE,
+    FACEBOOK,
+    NAVER,
+    KAKAO;
+
 }
